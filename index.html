@@ -404,119 +404,116 @@ footer{
   러닝코스추천 · 당신에게 맞는 러닝코스를 찾아보세요.
 </footer>
 
-
 <script>
 
-(function(){
-
-"use strict";
-
-
 const courses = [
-
   {
-    name:"한강 반포 러닝코스",
-    region:"서울",
-    distance:5.2,
-    level:"초보",
-    styles:["평지","야경","강변"],
-    score:96,
-    image:"https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1000&q=85"
+    name: "한강 반포 러닝코스",
+    region: "서울",
+    distance: 5.2,
+    level: "초보",
+    styles: ["평지", "야경", "강변"],
+    score: 96
   },
-
   {
-    name:"잠실 한강 러닝코스",
-    region:"서울",
-    distance:5,
-    level:"초보",
-    styles:["평지","강변","야경"],
-    score:94,
-    image:"https://images.unsplash.com/photo-1552674605-db6ffd4facb5?auto=format&fit=crop&w=1000&q=85"
+    name: "잠실 한강 러닝코스",
+    region: "서울",
+    distance: 5,
+    level: "초보",
+    styles: ["평지", "강변", "야경"],
+    score: 94
   },
-
   {
-    name:"여의도 한강공원",
-    region:"서울",
-    distance:5.8,
-    level:"초보",
-    styles:["평지","야경","공원"],
-    score:93,
-    image:"https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?auto=format&fit=crop&w=1000&q=85"
+    name: "여의도 한강공원",
+    region: "서울",
+    distance: 5.8,
+    level: "초보",
+    styles: ["평지", "야경", "공원"],
+    score: 93
   },
-
   {
-    name:"탄천 러닝코스",
-    region:"경기",
-    distance:10,
-    level:"중급",
-    styles:["평지","강변"],
-    score:91,
-    image:"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1000&q=85"
+    name: "탄천 러닝코스",
+    region: "경기",
+    distance: 10,
+    level: "중급",
+    styles: ["평지", "강변"],
+    score: 91
   },
-
   {
-    name:"일산 호수공원",
-    region:"경기",
-    distance:5,
-    level:"초보",
-    styles:["공원","평지"],
-    score:90,
-    image:"https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1000&q=85"
+    name: "일산 호수공원",
+    region: "경기",
+    distance: 5,
+    level: "초보",
+    styles: ["공원", "평지"],
+    score: 90
   },
-
   {
-    name:"송도 센트럴파크",
-    region:"인천",
-    distance:3,
-    level:"초보",
-    styles:["공원","야경","평지"],
-    score:92,
-    image:"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1000&q=85"
+    name: "송도 센트럴파크",
+    region: "인천",
+    distance: 3,
+    level: "초보",
+    styles: ["공원", "야경", "평지"],
+    score: 92
   }
-
 ];
 
 
-const region =
-  document.getElementById("region");
+function searchCourses() {
 
-const distance =
-  document.getElementById("distance");
+  const region = document.getElementById("region").value;
+  const distance = document.getElementById("distance").value;
+  const level = document.getElementById("level").value;
+  const style = document.getElementById("style").value;
 
-const level =
-  document.getElementById("level");
+  const result = courses.filter(function(course) {
 
-const style =
-  document.getElementById("style");
+    const regionOK =
+      region === "all" || course.region === region;
 
-const grid =
-  document.getElementById("courseGrid");
+    const levelOK =
+      level === "all" || course.level === level;
 
-const count =
-  document.getElementById("resultCount");
+    const styleOK =
+      style === "all" ||
+      course.styles.includes(style);
+
+    const distanceOK =
+      distance === "all" ||
+      Math.abs(course.distance - Number(distance)) <= 1.5;
+
+    return regionOK &&
+           levelOK &&
+           styleOK &&
+           distanceOK;
+
+  });
+
+  result.sort(function(a, b) {
+    return b.score - a.score;
+  });
 
 
-function render(list){
+  const grid =
+    document.getElementById("courseGrid");
 
-  count.textContent =
+  const count =
+    document.getElementById("resultCount");
+
+
+  count.innerText =
     "조건에 맞는 러닝코스 " +
-    list.length +
+    result.length +
     "개";
 
 
-  if(!list.length){
+  if (result.length === 0) {
 
     grid.innerHTML = `
       <div class="no-result">
-
-        <h3>
-          조건에 맞는 코스를 찾지 못했어요.
-        </h3>
-
-        <p style="margin-top:10px">
+        <h3>조건에 맞는 코스를 찾지 못했어요.</h3>
+        <p style="margin-top:10px;">
           검색 조건을 조금 넓혀보세요.
         </p>
-
       </div>
     `;
 
@@ -524,205 +521,77 @@ function render(list){
   }
 
 
-  grid.innerHTML =
-    list.map(function(course){
+  grid.innerHTML = result.map(function(course) {
 
-      return `
+    return `
+      <div class="course-card">
 
-        <article class="course-card">
+        <div
+          class="course-image"
+          style="
+            background-image:
+            url('https://images.unsplash.com/photo-1552674605-db6ffd4facb5?auto=format&fit=crop&w=1000&q=85');
+          ">
+        </div>
 
-          <div
-            class="course-image"
-            style="background-image:url('${course.image}')">
+        <div class="course-info">
+
+          <h3>${course.name}</h3>
+
+          <div class="course-meta">
+            ${course.region}
+            · ${course.distance}km
+            · ${course.level}
           </div>
 
-          <div class="course-info">
+          <div class="score">
+            추천도 ${course.score}점
+          </div>
 
-            <h3>
-              ${course.name}
-            </h3>
+          <div class="tags">
 
-            <div class="course-meta">
-              ${course.region}
-              ·
-              ${course.distance}km
-              ·
-              ${course.level}
-            </div>
-
-            <div class="score">
-              추천도 ${course.score}점
-            </div>
-
-            <div class="tags">
-
-              ${
-                course.styles
-                .map(function(tag){
-
-                  return `
-                    <span class="tag">
-                      ${tag}
-                    </span>
-                  `;
-
-                })
-                .join("")
-              }
-
-            </div>
+            ${course.styles.map(function(tag) {
+              return `
+                <span class="tag">
+                  ${tag}
+                </span>
+              `;
+            }).join("")}
 
           </div>
 
-        </article>
+        </div>
 
-      `;
+      </div>
+    `;
 
-    })
-    .join("");
-
-}
-
-
-function search(){
-
-  const selectedRegion =
-    region.value;
-
-  const selectedDistance =
-    distance.value;
-
-  const selectedLevel =
-    level.value;
-
-  const selectedStyle =
-    style.value;
-
-
-  const result =
-    courses
-    .filter(function(course){
-
-      const regionOK =
-        selectedRegion === "all" ||
-        course.region === selectedRegion;
-
-
-      const levelOK =
-        selectedLevel === "all" ||
-        course.level === selectedLevel;
-
-
-      const styleOK =
-        selectedStyle === "all" ||
-        course.styles.indexOf(selectedStyle) !== -1;
-
-
-      const distanceOK =
-        selectedDistance === "all" ||
-        Math.abs(
-          course.distance -
-          Number(selectedDistance)
-        ) <= 1.5;
-
-
-      return (
-        regionOK &&
-        levelOK &&
-        styleOK &&
-        distanceOK
-      );
-
-    })
-    .sort(function(a,b){
-
-      return b.score - a.score;
-
-    });
-
-
-  render(result);
-
-
-  document
-    .getElementById("search")
-    .scrollIntoView({
-      behavior:"smooth"
-    });
+  }).join("");
 
 }
 
 
 document
   .getElementById("searchButton")
-  .addEventListener(
-    "click",
-    search
-  );
+  .onclick = searchCourses;
 
 
 document
   .getElementById("goSearch")
-  .addEventListener(
-    "click",
-    function(){
+  .onclick = function() {
 
-      document
-        .getElementById("search")
-        .scrollIntoView({
-          behavior:"smooth"
-        });
+    document
+      .getElementById("search")
+      .scrollIntoView({
+        behavior: "smooth"
+      });
 
-    }
-  );
+  };
 
 
-document
-  .getElementById("nearbyTop")
-  .addEventListener(
-    "click",
-    function(){
-
-      if(!navigator.geolocation){
-
-        alert(
-          "이 브라우저에서는 위치 기능을 사용할 수 없습니다."
-        );
-
-        return;
-      }
-
-
-      navigator.geolocation.getCurrentPosition(
-
-        function(){
-
-          alert(
-            "현재 위치를 확인했습니다.\n\n" +
-            "다음 단계에서 가까운 러닝코스를 연결할게요."
-          );
-
-        },
-
-        function(){
-
-          alert(
-            "위치 권한을 허용해주세요."
-          );
-
-        }
-
-      );
-
-    }
-  );
-
-
-render(courses);
-
-})();
+searchCourses();
 
 </script>
+
 
 </body>
 </html>
