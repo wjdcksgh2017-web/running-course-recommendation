@@ -685,338 +685,297 @@ footer{
   러닝코스추천 · 서울과 파주부터 시작합니다.
 </footer>
 
-
 <script>
 
-const courses = [
+document.addEventListener("DOMContentLoaded", function(){
 
-  {
-    name:"반포한강공원",
-    nickname:"🍠 고구마런",
-    region:"서울",
-    distance:5.5,
-    level:"초보",
-    styles:["평지","야경","강변"],
-    score:98,
-    description:"한강을 따라 달리다가 반환하는 왕복형 코스입니다.",
-    time:"아침 · 저녁",
-    map:"반포한강공원",
-    shape:"sweet"
-  },
+  const courses = [
 
-  {
-    name:"여의도공원",
-    nickname:"🥚 에그런",
-    region:"서울",
-    distance:5,
-    level:"초보",
-    styles:["평지","공원"],
-    score:96,
-    description:"공원과 한강을 함께 즐길 수 있는 타원형 느낌의 코스입니다.",
-    time:"아침 · 저녁",
-    map:"여의도공원",
-    shape:"egg"
-  },
+    {
+      name:"반포한강공원",
+      nickname:"🍠 고구마런",
+      region:"서울",
+      distance:5.5,
+      level:"초보",
+      styles:["평지","야경","강변"],
+      score:98,
+      description:"반포한강공원에서 출발해 한강을 따라 달리는 왕복형 코스입니다.",
+      route:"달빛광장 → 잠수교 북단 → 서래섬 → 동작대교 → 달빛광장",
+      time:"아침 · 저녁",
+      map:"반포한강공원",
+      shape:"sweet"
+    },
 
-  {
-    name:"잠실한강공원",
-    nickname:"🐟 물고기런",
-    region:"서울",
-    distance:7,
-    level:"초보",
-    styles:["평지","야경","강변"],
-    score:95,
-    description:"한강변을 따라 순환하는 루프형 코스입니다.",
-    time:"아침 · 저녁",
-    map:"잠실한강공원",
-    shape:"fish"
-  },
+    {
+      name:"여의도 한강",
+      nickname:"🍠 고구마런",
+      region:"서울",
+      distance:7,
+      level:"초보",
+      styles:["평지","강변","풍경"],
+      score:97,
+      description:"여의도 외곽과 한강변을 따라 달리는 루프형 코스입니다.",
+      route:"여의도 외곽 → 한강변 → 여의도 외곽",
+      time:"아침 · 저녁",
+      map:"여의도한강공원",
+      shape:"sweet"
+    },
 
-  {
-    name:"서울숲",
-    nickname:"🍃 나뭇잎런",
-    region:"서울",
-    distance:4.5,
-    level:"초보",
-    styles:["평지","공원"],
-    score:92,
-    description:"서울숲 주변을 가볍게 순환하는 공원형 코스입니다.",
-    time:"아침 · 저녁",
-    map:"서울숲",
-    shape:"leaf"
-  },
+    {
+      name:"여의도공원",
+      nickname:"🥚 에그런",
+      region:"서울",
+      distance:2.5,
+      level:"초보",
+      styles:["평지","공원"],
+      score:94,
+      description:"여의도공원 주변을 한 바퀴 도는 짧은 공원형 코스입니다.",
+      route:"여의도공원 주변 한 바퀴",
+      time:"아침 · 저녁",
+      map:"여의도공원",
+      shape:"egg"
+    },
 
-  {
-    name:"운정호수공원",
-    nickname:"🍩 도넛런",
-    region:"파주",
-    distance:4,
-    level:"초보",
-    styles:["평지","공원","야경"],
-    score:97,
-    description:"호수 주변을 크게 한 바퀴 도는 순환형 코스입니다.",
-    time:"아침 · 저녁",
-    map:"운정호수공원",
-    shape:"donut"
-  },
+    {
+      name:"운정호수공원",
+      nickname:"🍩 도넛런",
+      region:"파주",
+      distance:4,
+      level:"초보",
+      styles:["평지","공원","야경"],
+      score:97,
+      description:"운정호수공원 주변을 순환하는 호수형 러닝코스입니다.",
+      route:"운정호수공원 주변 순환",
+      time:"아침 · 저녁",
+      map:"운정호수공원",
+      shape:"donut"
+    },
 
-  {
-    name:"임진각 평화누리",
-    nickname:"🪁 연날리기런",
-    region:"파주",
-    distance:5,
-    level:"초보",
-    styles:["평지","공원","풍경"],
-    score:94,
-    description:"넓은 공원과 주변 풍경을 즐길 수 있는 코스입니다.",
-    time:"낮 · 해질녘",
-    map:"임진각 평화누리공원",
-    shape:"kite"
-  },
+    {
+      name:"임진각 평화누리",
+      nickname:"🪁 연날리기런",
+      region:"파주",
+      distance:5,
+      level:"초보",
+      styles:["공원","풍경"],
+      score:94,
+      description:"평화누리공원 주변의 넓은 공간을 활용해 달리는 코스입니다.",
+      route:"평화누리공원 주변",
+      time:"낮 · 해질녘",
+      map:"임진각 평화누리공원",
+      shape:"kite"
+    },
 
-  {
-    name:"공릉천",
-    nickname:"🐍 뱀런",
-    region:"파주",
-    distance:10,
-    level:"중급",
-    styles:["평지","강변"],
-    score:92,
-    description:"하천을 따라 길게 달리는 직선형 러닝코스입니다.",
-    time:"아침 · 저녁",
-    map:"공릉천",
-    shape:"snake"
-  }
+    {
+      name:"공릉천",
+      nickname:"🐍 뱀런",
+      region:"파주",
+      distance:10,
+      level:"중급",
+      styles:["평지","강변"],
+      score:92,
+      description:"공릉천을 따라 길게 달리는 하천형 러닝코스입니다.",
+      route:"공릉천 하천길 왕복",
+      time:"아침 · 저녁",
+      map:"공릉천",
+      shape:"snake"
+    }
 
-];
+  ];
 
 
-function routeSVG(shape){
+  function routeSVG(shape){
 
-  if(shape==="sweet"){
-    return `
-      <svg class="route-svg" viewBox="0 0 300 200">
-        <path class="route-line"
-          d="M40 160 C80 130 70 60 130 55 C200 50 230 100 180 135 C140 165 100 175 40 160"/>
-        <circle class="route-start" cx="40" cy="160" r="8"/>
-        <circle class="route-end" cx="40" cy="160" r="14"/>
-      </svg>
-    `;
-  }
+    if(shape === "sweet"){
+      return `
+        <svg class="route-svg" viewBox="0 0 300 200">
+          <path class="route-line"
+            d="M40 160 C80 130 70 60 130 55 C200 50 230 100 180 135 C140 165 100 175 40 160"/>
+          <circle class="route-start" cx="40" cy="160" r="8"/>
+          <circle class="route-end" cx="40" cy="160" r="14"/>
+        </svg>
+      `;
+    }
 
+    if(shape === "egg"){
+      return `
+        <svg class="route-svg" viewBox="0 0 300 200">
+          <ellipse class="route-line"
+            cx="150"
+            cy="100"
+            rx="85"
+            ry="65"/>
+          <circle class="route-start" cx="65" cy="100" r="8"/>
+          <circle class="route-end" cx="65" cy="100" r="14"/>
+        </svg>
+      `;
+    }
 
-  if(shape==="egg"){
-    return `
-      <svg class="route-svg" viewBox="0 0 300 200">
-        <ellipse class="route-line"
-          cx="150"
-          cy="100"
-          rx="85"
-          ry="65"/>
-        <circle class="route-start" cx="65" cy="100" r="8"/>
-        <circle class="route-end" cx="65" cy="100" r="14"/>
-      </svg>
-    `;
-  }
+    if(shape === "donut"){
+      return `
+        <svg class="route-svg" viewBox="0 0 300 200">
+          <ellipse class="route-line"
+            cx="150"
+            cy="100"
+            rx="90"
+            ry="65"/>
+          <ellipse class="route-line"
+            cx="150"
+            cy="100"
+            rx="35"
+            ry="22"/>
+          <circle class="route-start" cx="60" cy="100" r="8"/>
+        </svg>
+      `;
+    }
 
+    if(shape === "kite"){
+      return `
+        <svg class="route-svg" viewBox="0 0 300 200">
+          <path class="route-line"
+            d="M150 25 L235 95 L150 170 L65 95 Z"/>
+          <path class="route-line"
+            d="M150 170 L150 190"/>
+          <circle class="route-start" cx="150" cy="25" r="8"/>
+        </svg>
+      `;
+    }
 
-  if(shape==="fish"){
-    return `
-      <svg class="route-svg" viewBox="0 0 300 200">
-        <path class="route-line"
-          d="M45 100 C80 45 180 45 220 100 C180 155 80 155 45 100 L20 65 M45 100 L20 135"/>
-        <circle class="route-start" cx="45" cy="100" r="8"/>
-        <circle class="route-end" cx="45" cy="100" r="14"/>
-      </svg>
-    `;
-  }
+    if(shape === "snake"){
+      return `
+        <svg class="route-svg" viewBox="0 0 300 200">
+          <path class="route-line"
+            d="M30 150 C80 30 130 170 180 55 C205 0 245 35 270 70"/>
+          <circle class="route-start" cx="30" cy="150" r="8"/>
+          <circle class="route-end" cx="270" cy="70" r="14"/>
+        </svg>
+      `;
+    }
 
-
-  if(shape==="leaf"){
-    return `
-      <svg class="route-svg" viewBox="0 0 300 200">
-        <path class="route-line"
-          d="M60 140 C80 50 210 35 235 80 C215 145 120 170 60 140"/>
-        <path class="route-line"
-          d="M65 138 L190 70"/>
-        <circle class="route-start" cx="60" cy="140" r="8"/>
-      </svg>
-    `;
-  }
-
-
-  if(shape==="donut"){
-    return `
-      <svg class="route-svg" viewBox="0 0 300 200">
-        <ellipse class="route-line"
-          cx="150"
-          cy="100"
-          rx="90"
-          ry="65"/>
-        <ellipse class="route-line"
-          cx="150"
-          cy="100"
-          rx="35"
-          ry="22"/>
-        <circle class="route-start" cx="60" cy="100" r="8"/>
-      </svg>
-    `;
+    return "";
   }
 
 
-  if(shape==="kite"){
-    return `
-      <svg class="route-svg" viewBox="0 0 300 200">
-        <path class="route-line"
-          d="M150 25 L235 95 L150 170 L65 95 Z"/>
-        <path class="route-line"
-          d="M150 170 L150 190"/>
-        <circle class="route-start" cx="150" cy="25" r="8"/>
-      </svg>
-    `;
-  }
+  function searchCourses(){
+
+    const region =
+      document.getElementById("region").value;
+
+    const distance =
+      document.getElementById("distance").value;
+
+    const level =
+      document.getElementById("level").value;
+
+    const style =
+      document.getElementById("style").value;
 
 
-  if(shape==="snake"){
-    return `
-      <svg class="route-svg" viewBox="0 0 300 200">
-        <path class="route-line"
-          d="M30 150 C80 30 130 170 180 55 C205 0 245 35 270 70"/>
-        <circle class="route-start" cx="30" cy="150" r="8"/>
-        <circle class="route-end" cx="270" cy="70" r="14"/>
-      </svg>
-    `;
-  }
+    const result = courses.filter(function(course){
 
-}
+      const regionOK =
+        region === "all" ||
+        course.region === region;
 
+      const levelOK =
+        level === "all" ||
+        course.level === level;
 
-function searchCourses(){
+      const styleOK =
+        style === "all" ||
+        course.styles.includes(style);
 
-  const region =
-    document.getElementById("region").value;
+      const distanceOK =
+        distance === "all" ||
+        Math.abs(
+          course.distance - Number(distance)
+        ) <= 2;
 
-  const distance =
-    document.getElementById("distance").value;
+      return (
+        regionOK &&
+        levelOK &&
+        styleOK &&
+        distanceOK
+      );
 
-  const level =
-    document.getElementById("level").value;
-
-  const style =
-    document.getElementById("style").value;
-
-
-  const result =
-    courses
-      .filter(function(course){
-
-        const regionOK =
-          region==="all" ||
-          course.region===region;
-
-        const levelOK =
-          level==="all" ||
-          course.level===level;
-
-        const styleOK =
-          style==="all" ||
-          course.styles.includes(style);
-
-        const distanceOK =
-          distance==="all" ||
-          Math.abs(
-            course.distance-
-            Number(distance)
-          )<=2;
-
-        return(
-          regionOK &&
-          levelOK &&
-          styleOK &&
-          distanceOK
-        );
-
-      })
-      .sort(function(a,b){
-
-        return b.score-a.score;
-
-      });
+    });
 
 
-  document
-    .getElementById("resultCount")
-    .innerText =
-      "조건에 맞는 러닝코스 "+
-      result.length+
+    result.sort(function(a,b){
+      return b.score - a.score;
+    });
+
+
+    const count =
+      document.getElementById("resultCount");
+
+    const grid =
+      document.getElementById("courseGrid");
+
+
+    count.innerText =
+      "조건에 맞는 러닝코스 " +
+      result.length +
       "개";
 
 
-  const grid =
-    document.getElementById("courseGrid");
+    if(result.length === 0){
+
+      grid.innerHTML = `
+        <div class="no-result">
+          <h3>조건에 맞는 코스를 찾지 못했어요.</h3>
+          <p style="margin-top:10px;">
+            검색 조건을 조금 넓혀보세요.
+          </p>
+        </div>
+      `;
+
+      return;
+    }
 
 
-  if(result.length===0){
+    grid.innerHTML =
+      result.map(function(course){
 
-    grid.innerHTML=`
-      <div class="no-result">
-        <h3>
-          조건에 맞는 코스를 찾지 못했어요.
-        </h3>
-        <p style="margin-top:10px;">
-          검색 조건을 조금 넓혀보세요.
-        </p>
-      </div>
-    `;
+        return `
+          <div
+            class="course-card"
+            data-index="${courses.indexOf(course)}">
 
-    return;
-  }
+            <div class="route-box">
 
+              <div class="route-label">
+                ${course.nickname}
+              </div>
 
-  grid.innerHTML =
-    result.map(function(course){
+              ${routeSVG(course.shape)}
 
-      return `
-
-        <div
-          class="course-card"
-          data-index="${courses.indexOf(course)}">
-
-          <div class="route-box">
-
-            <div class="route-label">
-              ${course.nickname}
             </div>
 
-            ${routeSVG(course.shape)}
 
-          </div>
+            <div class="course-info">
 
+              <h3>
+                ${course.name}
+              </h3>
 
-          <div class="course-info">
+              <div class="nickname">
+                ${course.nickname}
+              </div>
 
-            <h3>
-              ${course.name}
-            </h3>
+              <div class="course-meta">
+                ${course.region}
+                · ${course.distance}km
+                · ${course.level}
+              </div>
 
-            <div class="nickname">
-              ${course.nickname}
-            </div>
+              <div class="score">
+                추천도 ${course.score}점
+              </div>
 
-            <div class="course-meta">
-              ${course.region}
-              · ${course.distance}km
-              · ${course.level}
-            </div>
+              <div class="tags">
 
-            <div class="score">
-              추천도 ${course.score}점
-            </div>
-
-            <div class="tags">
-
-              ${
-                course.styles.map(function(tag){
+                ${course.styles.map(function(tag){
 
                   return `
                     <span class="tag">
@@ -1024,211 +983,249 @@ function searchCourses(){
                     </span>
                   `;
 
-                }).join("")
-              }
+                }).join("")}
+
+              </div>
 
             </div>
 
           </div>
+        `;
 
-        </div>
+      }).join("");
 
-      `;
-
-    }).join("");
-
-}
+  }
 
 
-function openDetail(course){
+  function openDetail(course){
 
-  document
-    .getElementById("detailName")
-    .innerText=course.name;
+    const modal =
+      document.getElementById("detailModal");
 
-
-  document
-    .getElementById("detailNickname")
-    .innerText=course.nickname;
+    if(!modal){
+      return;
+    }
 
 
-  document
-    .getElementById("detailScore")
-    .innerText=
-      "추천도 "+
-      course.score+
-      "점";
+    document.getElementById("detailName").innerText =
+      course.name;
 
+    document.getElementById("detailNickname").innerText =
+      course.nickname;
 
-  document
-    .getElementById("detailDescription")
-    .innerText=
+    document.getElementById("detailScore").innerText =
+      "추천도 " + course.score + "점";
+
+    document.getElementById("detailDescription").innerText =
       course.description;
 
-
-  document
-    .getElementById("detailRegion")
-    .innerText=
+    document.getElementById("detailRegion").innerText =
       course.region;
 
+    document.getElementById("detailDistance").innerText =
+      course.distance + "km";
 
-  document
-    .getElementById("detailDistance")
-    .innerText=
-      course.distance+"km";
-
-
-  document
-    .getElementById("detailLevel")
-    .innerText=
+    document.getElementById("detailLevel").innerText =
       course.level;
 
-
-  document
-    .getElementById("detailTime")
-    .innerText=
+    document.getElementById("detailTime").innerText =
       course.time;
 
-
-  document
-    .getElementById("detailRoute")
-    .innerHTML=
+    document.getElementById("detailRoute").innerHTML =
       routeSVG(course.shape);
 
 
-  document
-    .getElementById("mapButton")
-    .href=
-      "https://map.naver.com/p/search/"+
+    const routeText =
+      document.getElementById("detailRouteText");
+
+    if(routeText){
+      routeText.innerText =
+        course.route;
+    }
+
+
+    document.getElementById("mapButton").href =
+      "https://map.naver.com/p/search/" +
       encodeURIComponent(course.map);
 
 
-  document
-    .getElementById("detailModal")
-    .classList.add("open");
+    modal.classList.add("open");
 
-}
+  }
 
 
-document
-  .getElementById("searchButton")
-  .onclick=
-    searchCourses;
+  const searchButton =
+    document.getElementById("searchButton");
 
 
-document
-  .getElementById("goSearch")
-  .onclick=
-    function(){
+  if(searchButton){
 
-      document
-        .getElementById("search")
-        .scrollIntoView({
-          behavior:"smooth"
-        });
+    searchButton.addEventListener(
+      "click",
+      searchCourses
+    );
 
-    };
+  }
 
 
-document
-  .getElementById("nearbyTop")
-  .onclick=
-    function(){
+  const goSearch =
+    document.getElementById("goSearch");
 
-      if(!navigator.geolocation){
 
-        alert(
-          "이 브라우저에서는 위치 기능을 사용할 수 없습니다."
-        );
+  if(goSearch){
 
-        return;
+    goSearch.addEventListener(
+      "click",
+      function(){
+
+        document
+          .getElementById("search")
+          .scrollIntoView({
+            behavior:"smooth"
+          });
+
       }
+    );
+
+  }
 
 
-      navigator.geolocation.getCurrentPosition(
+  const nearbyTop =
+    document.getElementById("nearbyTop");
 
-        function(){
+
+  if(nearbyTop){
+
+    nearbyTop.addEventListener(
+      "click",
+      function(){
+
+        if(!navigator.geolocation){
 
           alert(
-            "현재 위치를 확인했습니다.\n\n"+
-            "다음 단계에서 가까운 러닝코스를 연결할게요."
+            "이 브라우저에서는 위치 기능을 사용할 수 없습니다."
           );
 
-        },
+          return;
+        }
 
-        function(){
 
-          alert(
-            "위치 권한을 허용해주세요."
+        navigator.geolocation.getCurrentPosition(
+
+          function(){
+
+            alert(
+              "현재 위치를 확인했습니다."
+            );
+
+          },
+
+          function(){
+
+            alert(
+              "위치 권한을 허용해주세요."
+            );
+
+          }
+
+        );
+
+      }
+    );
+
+  }
+
+
+  const courseGrid =
+    document.getElementById("courseGrid");
+
+
+  if(courseGrid){
+
+    courseGrid.addEventListener(
+      "click",
+      function(event){
+
+        const card =
+          event.target.closest(".course-card");
+
+        if(!card){
+          return;
+        }
+
+
+        const index =
+          Number(card.dataset.index);
+
+
+        if(
+          courses[index]
+        ){
+
+          openDetail(
+            courses[index]
           );
 
         }
 
-      );
-
-    };
-
-
-document
-  .getElementById("courseGrid")
-  .addEventListener(
-    "click",
-    function(event){
-
-      const card =
-        event.target.closest(
-          ".course-card"
-        );
-
-      if(!card){
-        return;
       }
+    );
 
-      const course=
-        courses[
-          Number(card.dataset.index)
-        ];
-
-      openDetail(course);
-
-    }
-  );
+  }
 
 
-document
-  .getElementById("closeDetail")
-  .onclick=
-    function(){
-
-      document
-        .getElementById("detailModal")
-        .classList.remove("open");
-
-    };
+  const closeDetail =
+    document.getElementById("closeDetail");
 
 
-document
-  .getElementById("detailModal")
-  .onclick=
-    function(event){
+  if(closeDetail){
 
-      if(
-        event.target.id===
-        "detailModal"
-      ){
+    closeDetail.addEventListener(
+      "click",
+      function(){
 
         document
           .getElementById("detailModal")
           .classList.remove("open");
 
       }
+    );
 
-    };
+  }
 
 
-searchCourses();
+  const detailModal =
+    document.getElementById("detailModal");
+
+
+  if(detailModal){
+
+    detailModal.addEventListener(
+      "click",
+      function(event){
+
+        if(
+          event.target === detailModal
+        ){
+
+          detailModal.classList.remove(
+            "open"
+          );
+
+        }
+
+      }
+    );
+
+  }
+
+
+  searchCourses();
+
+});
 
 </script>
+
 
 </body>
 </html>
