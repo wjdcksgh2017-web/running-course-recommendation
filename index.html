@@ -1,711 +1,728 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>러닝코스추천</title>
 
 <style>
-
-*{
-box-sizing:border-box;
-margin:0;
-padding:0;
-}
+*{box-sizing:border-box;margin:0;padding:0}
 
 body{
-font-family:Arial,"Noto Sans KR",sans-serif;
-background:#f4f4f2;
-color:#111;
+  font-family:Arial,"Noto Sans KR",sans-serif;
+  background:#f4f4f2;
+  color:#111;
 }
 
 header{
-position:absolute;
-top:0;
-left:0;
-width:100%;
-padding:28px 50px;
-z-index:10;
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  padding:28px 50px;
+  z-index:5;
 }
 
 .logo{
-font-size:24px;
-font-weight:800;
+  font-size:24px;
+  font-weight:800;
 }
 
 .hero{
-min-height:720px;
-display:grid;
-grid-template-columns:45% 55%;
-background:#fff;
+  min-height:700px;
+  display:grid;
+  grid-template-columns:45% 55%;
+  background:#fff;
 }
 
 .hero-text{
-padding:150px 60px 80px;
-display:flex;
-flex-direction:column;
-justify-content:center;
+  padding:130px 60px 70px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
 }
 
 .eyebrow{
-font-size:13px;
-font-weight:800;
-letter-spacing:2px;
-color:#777;
-margin-bottom:25px;
+  font-size:13px;
+  font-weight:800;
+  letter-spacing:2px;
+  color:#777;
+  margin-bottom:22px;
 }
 
 h1{
-font-size:clamp(55px,6vw,88px);
-line-height:.94;
-letter-spacing:-5px;
-margin-bottom:30px;
+  font-size:clamp(52px,6vw,86px);
+  line-height:.95;
+  letter-spacing:-5px;
+  margin-bottom:28px;
 }
 
 .description{
-font-size:18px;
-line-height:1.6;
-color:#555;
-max-width:500px;
-margin-bottom:35px;
+  font-size:18px;
+  line-height:1.6;
+  color:#555;
+  max-width:500px;
+  margin-bottom:32px;
 }
 
 .buttons{
-display:flex;
-gap:12px;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
 }
 
 button{
-border:none;
-cursor:pointer;
-padding:16px 24px;
-border-radius:999px;
-font-size:15px;
-font-weight:700;
+  border:0;
+  cursor:pointer;
+  padding:15px 22px;
+  border-radius:999px;
+  font-size:15px;
+  font-weight:700;
 }
 
 .primary{
-background:#111;
-color:white;
+  background:#111;
+  color:#fff;
 }
 
 .secondary{
-background:#eee;
+  background:#eee;
+  color:#111;
 }
 
 .hero-image{
-min-height:720px;
-
-background:
-linear-gradient(
-90deg,
-rgba(0,0,0,.04),
-rgba(0,0,0,0)
-),
-url("https://images.unsplash.com/photo-1552674605-db6ffd4facb5?auto=format&fit=crop&w=1800&q=90")
-center/cover;
+  min-height:700px;
+  background:url("https://images.unsplash.com/photo-1552674605-db6ffd4facb5?auto=format&fit=crop&w=1800&q=90") center/cover;
 }
 
-
-/* SEARCH */
-
 .search-section{
-padding:80px 50px;
-background:#f4f4f2;
+  padding:75px 50px;
+  background:#f4f4f2;
 }
 
 .section-title{
-font-size:36px;
-font-weight:800;
-letter-spacing:-2px;
-margin-bottom:35px;
+  font-size:34px;
+  font-weight:800;
+  letter-spacing:-2px;
+  margin-bottom:28px;
 }
 
 .filters{
-max-width:1200px;
-background:white;
-padding:30px;
-border-radius:24px;
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:20px;
+  max-width:1200px;
+  background:#fff;
+  padding:28px;
+  border-radius:22px;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:16px;
 }
 
 .filter label{
-display:block;
-font-size:13px;
-font-weight:700;
-margin-bottom:8px;
-color:#666;
+  display:block;
+  font-size:13px;
+  font-weight:700;
+  color:#666;
+  margin-bottom:8px;
 }
 
 select{
-width:100%;
-padding:15px;
-border:1px solid #ddd;
-border-radius:12px;
-font-size:15px;
-background:white;
+  width:100%;
+  padding:14px;
+  border:1px solid #ddd;
+  border-radius:12px;
+  background:#fff;
+  font-size:15px;
 }
 
 .search-button{
-margin-top:20px;
-background:#111;
-color:white;
-width:100%;
-padding:18px;
+  display:block;
+  width:100%;
+  max-width:1200px;
+  margin-top:16px;
+  background:#111;
+  color:#fff;
 }
 
 .results{
-margin-top:45px;
+  max-width:1200px;
+  margin-top:38px;
 }
 
 .result-count{
-font-size:15px;
-color:#666;
-margin-bottom:20px;
+  color:#666;
+  margin-bottom:18px;
 }
 
 .course-grid{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:20px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
 }
 
 .course-card{
-background:white;
-border-radius:20px;
-overflow:hidden;
-box-shadow:0 4px 20px rgba(0,0,0,.05);
+  background:#fff;
+  border-radius:18px;
+  overflow:hidden;
+  box-shadow:0 4px 18px rgba(0,0,0,.05);
 }
 
 .course-image{
-height:210px;
-background-size:cover;
-background-position:center;
+  height:205px;
+  background-size:cover;
+  background-position:center;
 }
 
 .course-info{
-padding:24px;
+  padding:22px;
 }
 
 .course-info h3{
-font-size:21px;
-margin-bottom:10px;
+  font-size:20px;
+  margin-bottom:9px;
 }
 
 .course-meta{
-color:#666;
-font-size:14px;
-margin-bottom:14px;
+  font-size:14px;
+  color:#666;
+  margin-bottom:12px;
 }
 
 .score{
-font-weight:800;
-margin-bottom:14px;
+  font-weight:800;
+  margin-bottom:12px;
 }
 
 .tags{
-display:flex;
-flex-wrap:wrap;
-gap:7px;
+  display:flex;
+  gap:7px;
+  flex-wrap:wrap;
 }
 
 .tag{
-background:#f0f0ee;
-padding:7px 10px;
-border-radius:999px;
-font-size:12px;
+  background:#f0f0ee;
+  padding:7px 10px;
+  border-radius:999px;
+  font-size:12px;
 }
 
 .no-result{
-background:white;
-padding:50px;
-border-radius:20px;
-text-align:center;
-color:#777;
+  background:#fff;
+  border-radius:18px;
+  padding:40px;
+  text-align:center;
+  color:#777;
 }
-
-
-/* FOOTER */
 
 footer{
-background:#111;
-color:#777;
-padding:40px 50px;
-margin-top:0;
+  background:#111;
+  color:#777;
+  padding:38px 50px;
 }
-
-
-/* MOBILE */
 
 @media(max-width:800px){
 
-header{
-padding:22px;
-}
+  header{
+    padding:22px;
+  }
 
-.hero{
-grid-template-columns:1fr;
-}
+  .hero{
+    grid-template-columns:1fr;
+  }
 
-.hero-text{
-padding:120px 25px 60px;
-}
+  .hero-text{
+    padding:115px 24px 55px;
+  }
 
-.hero-image{
-min-height:450px;
-}
+  .hero-image{
+    min-height:430px;
+  }
 
-.search-section{
-padding:60px 25px;
-}
+  .search-section{
+    padding:58px 24px;
+  }
 
-.filters{
-grid-template-columns:1fr;
-}
+  .filters{
+    grid-template-columns:1fr;
+  }
 
-.course-grid{
-grid-template-columns:1fr;
-}
+  .course-grid{
+    grid-template-columns:1fr;
+  }
 
-h1{
-letter-spacing:-3px;
+  h1{
+    letter-spacing:-3px;
+  }
 }
-
-}
-
 </style>
-
 </head>
-
 
 <body>
 
-
 <header>
-
-<div class="logo">
-러닝코스추천
-</div>
-
+  <div class="logo">러닝코스추천</div>
 </header>
-
-
 
 <section class="hero">
 
-<div class="hero-text">
+  <div class="hero-text">
 
-<div class="eyebrow">
-RUN YOUR WAY
-</div>
+    <div class="eyebrow">
+      RUN YOUR WAY
+    </div>
 
-<h1>
-오늘<br>
-어디서<br>
-달릴까요?
-</h1>
+    <h1>
+      오늘<br>
+      어디서<br>
+      달릴까요?
+    </h1>
 
-<p class="description">
+    <p class="description">
+      지역과 거리, 취향에 맞는 러닝코스를 찾아보세요.
+      당신에게 가장 잘 맞는 코스를 추천해드립니다.
+    </p>
 
-지역과 거리, 취향에 맞는 러닝코스를 찾아보세요.
-당신에게 가장 잘 맞는 코스를 추천해드립니다.
+    <div class="buttons">
+      <button type="button" id="goSearch" class="primary">
+        코스 검색하기
+      </button>
 
-</p>
+      <button type="button" id="nearbyTop" class="secondary">
+        내 주변 코스
+      </button>
+    </div>
 
-<div class="buttons">
+  </div>
 
-<button
-class="primary"
-onclick="scrollToSearch()">
-
-코스 검색하기
-
-</button>
-
-<button
-class="secondary"
-onclick="findNearby()">
-
-내 주변 코스
-
-</button>
-
-</div>
-
-</div>
-
-
-<div class="hero-image"></div>
+  <div class="hero-image"></div>
 
 </section>
 
 
+<section class="search-section" id="search">
 
-<section
-class="search-section"
-id="search">
+  <div class="section-title">
+    나에게 맞는 코스 찾기
+  </div>
 
+  <div class="filters">
 
-<div class="section-title">
+    <div class="filter">
 
-나에게 맞는 코스 찾기
+      <label for="region">
+        지역
+      </label>
 
-</div>
+      <select id="region">
+        <option value="all">전체 지역</option>
+        <option value="서울">서울</option>
+        <option value="경기">경기</option>
+        <option value="인천">인천</option>
+      </select>
 
+    </div>
 
 
-<div class="filters">
+    <div class="filter">
 
+      <label for="distance">
+        거리
+      </label>
 
-<div class="filter">
+      <select id="distance">
+        <option value="all">전체 거리</option>
+        <option value="3">3km</option>
+        <option value="5">5km</option>
+        <option value="10">10km</option>
+      </select>
 
-<label>
-지역
-</label>
+    </div>
 
-<select id="region">
 
-<option value="all">
-전체 지역
-</option>
+    <div class="filter">
 
-<option value="서울">
-서울
-</option>
+      <label for="level">
+        난이도
+      </label>
 
-<option value="경기">
-경기
-</option>
+      <select id="level">
+        <option value="all">전체 난이도</option>
+        <option value="초보">초보</option>
+        <option value="중급">중급</option>
+        <option value="상급">상급</option>
+      </select>
 
-<option value="인천">
-인천
-</option>
+    </div>
 
-</select>
 
-</div>
+    <div class="filter">
 
+      <label for="style">
+        취향
+      </label>
 
+      <select id="style">
+        <option value="all">전체 취향</option>
+        <option value="평지">평지</option>
+        <option value="야경">야경</option>
+        <option value="강변">강변</option>
+        <option value="공원">공원</option>
+      </select>
 
-<div class="filter">
+    </div>
 
-<label>
-거리
-</label>
+  </div>
 
-<select id="distance">
 
-<option value="all">
-전체 거리
-</option>
+  <button
+    type="button"
+    id="searchButton"
+    class="search-button">
 
-<option value="3">
-3km
-</option>
+    러닝코스 찾기
 
-<option value="5">
-5km
-</option>
+  </button>
 
-<option value="10">
-10km
-</option>
 
-</select>
+  <div class="results">
 
-</div>
+    <div
+      id="resultCount"
+      class="result-count">
+    </div>
 
+    <div
+      id="courseGrid"
+      class="course-grid">
+    </div>
 
-
-<div class="filter">
-
-<label>
-난이도
-</label>
-
-<select id="level">
-
-<option value="all">
-전체 난이도
-</option>
-
-<option value="초보">
-초보
-</option>
-
-<option value="중급">
-중급
-</option>
-
-<option value="상급">
-상급
-</option>
-
-</select>
-
-</div>
-
-
-
-<div class="filter">
-
-<label>
-취향
-</label>
-
-<select id="style">
-
-<option value="all">
-전체 취향
-</option>
-
-<option value="평지">
-평지
-</option>
-
-<option value="야경">
-야경
-</option>
-
-<option value="강변">
-강변
-</option>
-
-<option value="공원">
-공원
-</option>
-
-</select>
-
-</div>
-
-
-</div>
-
-
-
-<button
-class="search-button"
-onclick="searchCourses()">
-
-러닝코스 찾기
-
-</button>
-
-
-
-<div
-class="results"
-id="results">
-
-<div class="result-count">
-
-전체 러닝코스를 확인해보세요.
-
-</div>
-
-
-<div
-class="course-grid"
-id="courseGrid">
-
-</div>
-
-</div>
-
+  </div>
 
 </section>
-
 
 
 <footer>
-
-러닝코스추천 · 당신에게 맞는 러닝코스를 찾아보세요.
-
+  러닝코스추천 · 당신에게 맞는 러닝코스를 찾아보세요.
 </footer>
 
 
-
 <script>
 
-<script>
+(function(){
+
+"use strict";
+
+
 const courses = [
+
   {
-    name: "한강 반포 러닝코스",
-    region: "서울",
-    distance: 5.2,
-    level: "초보",
-    styles: ["평지", "야경", "강변"],
-    score: 96,
-    image: "https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1000&q=85"
+    name:"한강 반포 러닝코스",
+    region:"서울",
+    distance:5.2,
+    level:"초보",
+    styles:["평지","야경","강변"],
+    score:96,
+    image:"https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1000&q=85"
   },
+
   {
-    name: "잠실 한강 러닝코스",
-    region: "서울",
-    distance: 5,
-    level: "초보",
-    styles: ["평지", "강변", "야경"],
-    score: 94,
-    image: "https://images.unsplash.com/photo-1552674605-db6ffd4facb5?auto=format&fit=crop&w=1000&q=85"
+    name:"잠실 한강 러닝코스",
+    region:"서울",
+    distance:5,
+    level:"초보",
+    styles:["평지","강변","야경"],
+    score:94,
+    image:"https://images.unsplash.com/photo-1552674605-db6ffd4facb5?auto=format&fit=crop&w=1000&q=85"
   },
+
   {
-    name: "여의도 한강공원",
-    region: "서울",
-    distance: 5.8,
-    level: "초보",
-    styles: ["평지", "야경", "공원"],
-    score: 93,
-    image: "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?auto=format&fit=crop&w=1000&q=85"
+    name:"여의도 한강공원",
+    region:"서울",
+    distance:5.8,
+    level:"초보",
+    styles:["평지","야경","공원"],
+    score:93,
+    image:"https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?auto=format&fit=crop&w=1000&q=85"
   },
+
   {
-    name: "탄천 러닝코스",
-    region: "경기",
-    distance: 10,
-    level: "중급",
-    styles: ["평지", "강변"],
-    score: 91,
-    image: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1000&q=85"
+    name:"탄천 러닝코스",
+    region:"경기",
+    distance:10,
+    level:"중급",
+    styles:["평지","강변"],
+    score:91,
+    image:"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1000&q=85"
   },
+
   {
-    name: "일산 호수공원",
-    region: "경기",
-    distance: 5,
-    level: "초보",
-    styles: ["공원", "평지"],
-    score: 90,
-    image: "https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1000&q=85"
+    name:"일산 호수공원",
+    region:"경기",
+    distance:5,
+    level:"초보",
+    styles:["공원","평지"],
+    score:90,
+    image:"https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1000&q=85"
   },
+
   {
-    name: "송도 센트럴파크",
-    region: "인천",
-    distance: 3,
-    level: "초보",
-    styles: ["공원", "야경", "평지"],
-    score: 92,
-    image: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1000&q=85"
+    name:"송도 센트럴파크",
+    region:"인천",
+    distance:3,
+    level:"초보",
+    styles:["공원","야경","평지"],
+    score:92,
+    image:"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1000&q=85"
   }
+
 ];
 
-function scrollToSearch() {
-  document.getElementById("search").scrollIntoView({
-    behavior: "smooth"
-  });
-}
 
-function searchCourses() {
-  const region = document.getElementById("region").value;
-  const distance = document.getElementById("distance").value;
-  const level = document.getElementById("level").value;
-  const style = document.getElementById("style").value;
+const region =
+  document.getElementById("region");
 
-  const filtered = courses.filter(function(course) {
+const distance =
+  document.getElementById("distance");
 
-    const regionMatch =
-      region === "all" || course.region === region;
+const level =
+  document.getElementById("level");
 
-    const levelMatch =
-      level === "all" || course.level === level;
+const style =
+  document.getElementById("style");
 
-    const styleMatch =
-      style === "all" || course.styles.includes(style);
+const grid =
+  document.getElementById("courseGrid");
 
-    let distanceMatch = true;
+const count =
+  document.getElementById("resultCount");
 
-    if (distance !== "all") {
-      const target = Number(distance);
-      distanceMatch =
-        Math.abs(course.distance - target) <= 1.5;
-    }
 
-    return regionMatch && levelMatch && styleMatch && distanceMatch;
-  });
-
-  filtered.sort(function(a, b) {
-    return b.score - a.score;
-  });
-
-  const grid = document.getElementById("courseGrid");
-  const count = document.querySelector(".result-count");
+function render(list){
 
   count.textContent =
-    "조건에 맞는 러닝코스 " + filtered.length + "개";
+    "조건에 맞는 러닝코스 " +
+    list.length +
+    "개";
 
-  if (filtered.length === 0) {
+
+  if(!list.length){
+
     grid.innerHTML = `
       <div class="no-result">
-        <h3>조건에 맞는 코스를 찾지 못했어요.</h3>
-        <p style="margin-top:10px;">
+
+        <h3>
+          조건에 맞는 코스를 찾지 못했어요.
+        </h3>
+
+        <p style="margin-top:10px">
           검색 조건을 조금 넓혀보세요.
         </p>
+
       </div>
     `;
+
     return;
   }
 
-  grid.innerHTML = filtered.map(function(course) {
-    return `
-      <div class="course-card">
 
-        <div
-          class="course-image"
-          style="background-image:url('${course.image}')">
-        </div>
+  grid.innerHTML =
+    list.map(function(course){
 
-        <div class="course-info">
+      return `
 
-          <h3>${course.name}</h3>
+        <article class="course-card">
 
-          <div class="course-meta">
-            ${course.region} · ${course.distance}km · ${course.level}
+          <div
+            class="course-image"
+            style="background-image:url('${course.image}')">
           </div>
 
-          <div class="score">
-            추천도 ${course.score}점
+          <div class="course-info">
+
+            <h3>
+              ${course.name}
+            </h3>
+
+            <div class="course-meta">
+              ${course.region}
+              ·
+              ${course.distance}km
+              ·
+              ${course.level}
+            </div>
+
+            <div class="score">
+              추천도 ${course.score}점
+            </div>
+
+            <div class="tags">
+
+              ${
+                course.styles
+                .map(function(tag){
+
+                  return `
+                    <span class="tag">
+                      ${tag}
+                    </span>
+                  `;
+
+                })
+                .join("")
+              }
+
+            </div>
+
           </div>
 
-          <div class="tags">
-            ${course.styles.map(function(tag) {
-              return '<span class="tag">' + tag + '</span>';
-            }).join("")}
-          </div>
+        </article>
 
-        </div>
+      `;
 
-      </div>
-    `;
-  }).join("");
+    })
+    .join("");
+
 }
 
-function findNearby() {
-  if (!navigator.geolocation) {
-    alert("현재 브라우저에서는 위치 기능을 사용할 수 없습니다.");
-    return;
-  }
 
-  navigator.geolocation.getCurrentPosition(
-    function() {
-      alert(
-        "현재 위치를 확인했습니다.\n\n" +
-        "다음 단계에서 내 위치를 기준으로 " +
-        "가까운 러닝코스를 추천하도록 연결할게요."
+function search(){
+
+  const selectedRegion =
+    region.value;
+
+  const selectedDistance =
+    distance.value;
+
+  const selectedLevel =
+    level.value;
+
+  const selectedStyle =
+    style.value;
+
+
+  const result =
+    courses
+    .filter(function(course){
+
+      const regionOK =
+        selectedRegion === "all" ||
+        course.region === selectedRegion;
+
+
+      const levelOK =
+        selectedLevel === "all" ||
+        course.level === selectedLevel;
+
+
+      const styleOK =
+        selectedStyle === "all" ||
+        course.styles.indexOf(selectedStyle) !== -1;
+
+
+      const distanceOK =
+        selectedDistance === "all" ||
+        Math.abs(
+          course.distance -
+          Number(selectedDistance)
+        ) <= 1.5;
+
+
+      return (
+        regionOK &&
+        levelOK &&
+        styleOK &&
+        distanceOK
       );
-    },
-    function() {
-      alert(
-        "위치 권한이 필요합니다.\n" +
-        "브라우저에서 위치 권한을 허용해주세요."
-      );
+
+    })
+    .sort(function(a,b){
+
+      return b.score - a.score;
+
+    });
+
+
+  render(result);
+
+
+  document
+    .getElementById("search")
+    .scrollIntoView({
+      behavior:"smooth"
+    });
+
+}
+
+
+document
+  .getElementById("searchButton")
+  .addEventListener(
+    "click",
+    search
+  );
+
+
+document
+  .getElementById("goSearch")
+  .addEventListener(
+    "click",
+    function(){
+
+      document
+        .getElementById("search")
+        .scrollIntoView({
+          behavior:"smooth"
+        });
+
     }
   );
-}
 
-searchCourses();
+
+document
+  .getElementById("nearbyTop")
+  .addEventListener(
+    "click",
+    function(){
+
+      if(!navigator.geolocation){
+
+        alert(
+          "이 브라우저에서는 위치 기능을 사용할 수 없습니다."
+        );
+
+        return;
+      }
+
+
+      navigator.geolocation.getCurrentPosition(
+
+        function(){
+
+          alert(
+            "현재 위치를 확인했습니다.\n\n" +
+            "다음 단계에서 가까운 러닝코스를 연결할게요."
+          );
+
+        },
+
+        function(){
+
+          alert(
+            "위치 권한을 허용해주세요."
+          );
+
+        }
+
+      );
+
+    }
+  );
+
+
+render(courses);
+
+})();
+
 </script>
 
-
 </body>
-
 </html>
