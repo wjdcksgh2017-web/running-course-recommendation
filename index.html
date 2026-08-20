@@ -164,6 +164,13 @@ select{
   border-radius:18px;
   overflow:hidden;
   box-shadow:0 4px 18px rgba(0,0,0,.05);
+  cursor:pointer;
+  transition:.2s;
+}
+
+.course-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 8px 25px rgba(0,0,0,.1);
 }
 
 .course-image{
@@ -219,6 +226,98 @@ footer{
   padding:38px 50px;
 }
 
+
+/* 상세정보 팝업 */
+
+.detail-modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.55);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  z-index:50;
+}
+
+.detail-modal.open{
+  display:flex;
+}
+
+.detail-panel{
+  width:min(620px,100%);
+  max-height:90vh;
+  overflow:auto;
+  background:#fff;
+  border-radius:24px;
+  padding:28px;
+}
+
+.detail-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:20px;
+  margin-bottom:20px;
+}
+
+.detail-top h2{
+  font-size:30px;
+  line-height:1.2;
+}
+
+.close-detail{
+  background:#eee;
+  padding:10px 15px;
+}
+
+.detail-score{
+  font-weight:800;
+  margin-bottom:16px;
+}
+
+.detail-description{
+  color:#555;
+  line-height:1.7;
+  margin-bottom:22px;
+}
+
+.detail-list{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-bottom:22px;
+}
+
+.detail-item{
+  background:#f5f5f3;
+  border-radius:14px;
+  padding:14px;
+}
+
+.detail-item strong{
+  display:block;
+  font-size:12px;
+  color:#777;
+  margin-bottom:5px;
+}
+
+.detail-actions{
+  display:flex;
+}
+
+.map-button{
+  width:100%;
+  text-align:center;
+  text-decoration:none;
+  background:#111;
+  color:#fff;
+  padding:15px 20px;
+  border-radius:999px;
+  font-weight:700;
+}
+
+
 @media(max-width:800px){
 
   header{
@@ -252,15 +351,26 @@ footer{
   h1{
     letter-spacing:-3px;
   }
+
+  .detail-list{
+    grid-template-columns:1fr;
+  }
+
 }
+
 </style>
 </head>
 
+
 <body>
 
+
 <header>
-  <div class="logo">러닝코스추천</div>
+  <div class="logo">
+    러닝코스추천
+  </div>
 </header>
+
 
 <section class="hero">
 
@@ -277,34 +387,49 @@ footer{
     </h1>
 
     <p class="description">
-      지역과 거리, 취향에 맞는 러닝코스를 찾아보세요.
-      당신에게 가장 잘 맞는 코스를 추천해드립니다.
+      서울과 파주의 러닝코스를 먼저 모았습니다.
+      지역과 거리, 취향에 맞는 코스를 찾아보세요.
     </p>
 
     <div class="buttons">
-      <button type="button" id="goSearch" class="primary">
+
+      <button
+        type="button"
+        id="goSearch"
+        class="primary">
         코스 검색하기
       </button>
 
-      <button type="button" id="nearbyTop" class="secondary">
+      <button
+        type="button"
+        id="nearbyTop"
+        class="secondary">
         내 주변 코스
       </button>
+
     </div>
 
   </div>
+
 
   <div class="hero-image"></div>
 
 </section>
 
 
-<section class="search-section" id="search">
+
+<section
+  class="search-section"
+  id="search">
+
 
   <div class="section-title">
     나에게 맞는 코스 찾기
   </div>
 
+
   <div class="filters">
+
 
     <div class="filter">
 
@@ -313,13 +438,23 @@ footer{
       </label>
 
       <select id="region">
-        <option value="all">전체 지역</option>
-        <option value="서울">서울</option>
-        <option value="경기">경기</option>
-        <option value="인천">인천</option>
+
+        <option value="all">
+          전체 지역
+        </option>
+
+        <option value="서울">
+          서울
+        </option>
+
+        <option value="파주">
+          파주
+        </option>
+
       </select>
 
     </div>
+
 
 
     <div class="filter">
@@ -329,13 +464,27 @@ footer{
       </label>
 
       <select id="distance">
-        <option value="all">전체 거리</option>
-        <option value="3">3km</option>
-        <option value="5">5km</option>
-        <option value="10">10km</option>
+
+        <option value="all">
+          전체 거리
+        </option>
+
+        <option value="3">
+          3km
+        </option>
+
+        <option value="5">
+          5km
+        </option>
+
+        <option value="10">
+          10km
+        </option>
+
       </select>
 
     </div>
+
 
 
     <div class="filter">
@@ -345,13 +494,27 @@ footer{
       </label>
 
       <select id="level">
-        <option value="all">전체 난이도</option>
-        <option value="초보">초보</option>
-        <option value="중급">중급</option>
-        <option value="상급">상급</option>
+
+        <option value="all">
+          전체 난이도
+        </option>
+
+        <option value="초보">
+          초보
+        </option>
+
+        <option value="중급">
+          중급
+        </option>
+
+        <option value="상급">
+          상급
+        </option>
+
       </select>
 
     </div>
+
 
 
     <div class="filter">
@@ -361,16 +524,41 @@ footer{
       </label>
 
       <select id="style">
-        <option value="all">전체 취향</option>
-        <option value="평지">평지</option>
-        <option value="야경">야경</option>
-        <option value="강변">강변</option>
-        <option value="공원">공원</option>
+
+        <option value="all">
+          전체 취향
+        </option>
+
+        <option value="평지">
+          평지
+        </option>
+
+        <option value="야경">
+          야경
+        </option>
+
+        <option value="강변">
+          강변
+        </option>
+
+        <option value="공원">
+          공원
+        </option>
+
+        <option value="트레일">
+          트레일
+        </option>
+
+        <option value="풍경">
+          풍경
+        </option>
+
       </select>
 
     </div>
 
   </div>
+
 
 
   <button
@@ -381,6 +569,7 @@ footer{
     러닝코스 찾기
 
   </button>
+
 
 
   <div class="results">
@@ -397,195 +586,819 @@ footer{
 
   </div>
 
+
 </section>
 
 
+
+<!-- 상세정보 팝업 -->
+
+<div
+  class="detail-modal"
+  id="detailModal"
+  aria-hidden="true">
+
+
+  <div class="detail-panel">
+
+
+    <div class="detail-top">
+
+      <h2 id="detailName"></h2>
+
+      <button
+        type="button"
+        class="close-detail"
+        id="closeDetail">
+
+        닫기
+
+      </button>
+
+    </div>
+
+
+    <div
+      class="detail-score"
+      id="detailScore">
+    </div>
+
+
+    <p
+      class="detail-description"
+      id="detailDescription">
+    </p>
+
+
+
+    <div class="detail-list">
+
+
+      <div class="detail-item">
+
+        <strong>
+          지역
+        </strong>
+
+        <span id="detailRegion">
+        </span>
+
+      </div>
+
+
+      <div class="detail-item">
+
+        <strong>
+          거리
+        </strong>
+
+        <span id="detailDistance">
+        </span>
+
+      </div>
+
+
+      <div class="detail-item">
+
+        <strong>
+          난이도
+        </strong>
+
+        <span id="detailLevel">
+        </span>
+
+      </div>
+
+
+      <div class="detail-item">
+
+        <strong>
+          추천 시간
+        </strong>
+
+        <span id="detailTime">
+        </span>
+
+      </div>
+
+
+      <div class="detail-item">
+
+        <strong>
+          편의시설
+        </strong>
+
+        <span id="detailFacilities">
+        </span>
+
+      </div>
+
+
+      <div class="detail-item">
+
+        <strong>
+          코스 특징
+        </strong>
+
+        <span id="detailStyles">
+        </span>
+
+      </div>
+
+
+    </div>
+
+
+
+    <div class="detail-actions">
+
+      <a
+        id="mapButton"
+        class="map-button"
+        href="#"
+        target="_blank"
+        rel="noopener noreferrer">
+
+        네이버 지도에서 보기
+
+      </a>
+
+    </div>
+
+
+  </div>
+
+</div>
+
+
+
 <footer>
-  러닝코스추천 · 당신에게 맞는 러닝코스를 찾아보세요.
+
+  러닝코스추천 · 서울과 파주부터 시작합니다.
+
 </footer>
+
+
 
 <script>
 
+
 const courses = [
+
+
   {
-    name: "한강 반포 러닝코스",
-    region: "서울",
-    distance: 5.2,
-    level: "초보",
-    styles: ["평지", "야경", "강변"],
-    score: 96
+    name:"반포한강공원 · 한강&잠수교",
+    region:"서울",
+    distance:5.5,
+    level:"초보",
+    styles:["평지","야경","강변"],
+    score:98,
+    description:"한강을 따라 달리기 좋은 대표적인 평지 코스입니다.",
+    time:"아침 · 저녁",
+    facilities:"화장실 · 편의시설",
+    map:"반포한강공원",
+    image:"https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1000&q=85"
   },
+
+
   {
-    name: "잠실 한강 러닝코스",
-    region: "서울",
-    distance: 5,
-    level: "초보",
-    styles: ["평지", "강변", "야경"],
-    score: 94
+    name:"여의도공원 · 윤중로",
+    region:"서울",
+    distance:4.5,
+    level:"초보",
+    styles:["평지","공원"],
+    score:96,
+    description:"도심에서 가볍게 달리기 좋은 평지형 코스입니다.",
+    time:"아침 · 저녁",
+    facilities:"화장실 · 편의시설",
+    map:"여의도공원",
+    image:"https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?auto=format&fit=crop&w=1000&q=85"
   },
+
+
   {
-    name: "여의도 한강공원",
-    region: "서울",
-    distance: 5.8,
-    level: "초보",
-    styles: ["평지", "야경", "공원"],
-    score: 93
+    name:"여의도공원 · 공원 루프",
+    region:"서울",
+    distance:2.5,
+    level:"초보",
+    styles:["평지","공원"],
+    score:95,
+    description:"짧게 한 바퀴 달리고 싶은 날 추천하는 코스입니다.",
+    time:"아침 · 저녁",
+    facilities:"화장실 · 편의시설",
+    map:"여의도공원",
+    image:"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1000&q=85"
   },
+
+
   {
-    name: "탄천 러닝코스",
-    region: "경기",
-    distance: 10,
-    level: "중급",
-    styles: ["평지", "강변"],
-    score: 91
+    name:"여의도 · 한강&샛강",
+    region:"서울",
+    distance:6.5,
+    level:"초보",
+    styles:["평지","강변","공원"],
+    score:94,
+    description:"한강과 공원 구간을 함께 즐길 수 있는 평지형 코스입니다.",
+    time:"아침 · 저녁",
+    facilities:"화장실 · 편의시설",
+    map:"여의도한강공원",
+    image:"https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1000&q=85"
   },
+
+
   {
-    name: "일산 호수공원",
-    region: "경기",
-    distance: 5,
-    level: "초보",
-    styles: ["공원", "평지"],
-    score: 90
+    name:"잠실한강공원 · 한강 루프",
+    region:"서울",
+    distance:5,
+    level:"초보",
+    styles:["평지","야경","강변"],
+    score:95,
+    description:"한강변을 따라 달리기 좋은 초보자용 평지 코스입니다.",
+    time:"아침 · 저녁",
+    facilities:"화장실 · 편의시설",
+    map:"잠실한강공원",
+    image:"https://images.unsplash.com/photo-1552674605-db6ffd4facb5?auto=format&fit=crop&w=1000&q=85"
   },
+
+
   {
-    name: "송도 센트럴파크",
-    region: "인천",
-    distance: 3,
-    level: "초보",
-    styles: ["공원", "야경", "평지"],
-    score: 92
+    name:"뚝섬한강공원",
+    region:"서울",
+    distance:null,
+    level:"초보",
+    styles:["평지","야경","강변"],
+    score:93,
+    description:"거리 정보를 확인하면서 자유롭게 루트를 만들기 좋은 한강 코스입니다.",
+    time:"아침 · 저녁",
+    facilities:"화장실 · 편의시설",
+    map:"뚝섬한강공원",
+    image:"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1000&q=85"
+  },
+
+
+  {
+    name:"잠원한강공원",
+    region:"서울",
+    distance:null,
+    level:"초보",
+    styles:["평지","강변"],
+    score:92,
+    description:"평지 위주의 한강변 러닝을 즐기기 좋은 코스입니다.",
+    time:"아침 · 저녁",
+    facilities:"화장실 · 편의시설",
+    map:"잠원한강공원",
+    image:"https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1000&q=85"
+  },
+
+
+  {
+    name:"광나루한강공원",
+    region:"서울",
+    distance:null,
+    level:"초보",
+    styles:["평지","강변"],
+    score:91,
+    description:"한강변을 따라 여유롭게 달리기 좋은 평지형 코스입니다.",
+    time:"아침 · 저녁",
+    facilities:"화장실 · 편의시설",
+    map:"광나루한강공원",
+    image:"https://images.unsplash.com/photo-1552674605-db6ffd4facb5?auto=format&fit=crop&w=1000&q=85"
+  },
+
+
+  {
+    name:"서울숲",
+    region:"서울",
+    distance:null,
+    level:"초보",
+    styles:["평지","공원"],
+    score:91,
+    description:"공원 안에서 가볍게 달리기 좋은 초보자용 코스입니다.",
+    time:"아침 · 저녁",
+    facilities:"화장실 · 편의시설",
+    map:"서울숲",
+    image:"https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?auto=format&fit=crop&w=1000&q=85"
+  },
+
+
+  {
+    name:"남산",
+    region:"서울",
+    distance:null,
+    level:"중급",
+    styles:["트레일","풍경"],
+    score:90,
+    description:"오르막이 있어 평지 코스보다 운동 강도가 높은 코스입니다.",
+    time:"아침 · 낮",
+    facilities:"화장실 · 편의시설",
+    map:"남산",
+    image:"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1000&q=85"
+  },
+
+
+  {
+    name:"운정호수공원",
+    region:"파주",
+    distance:null,
+    level:"초보",
+    styles:["평지","공원","야경"],
+    score:96,
+    description:"호수를 중심으로 공원 풍경을 즐기며 달리기 좋은 파주 대표 코스입니다.",
+    time:"아침 · 저녁",
+    facilities:"화장실 · 편의시설",
+    map:"운정호수공원",
+    image:"https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1000&q=85"
+  },
+
+
+  {
+    name:"공릉천",
+    region:"파주",
+    distance:null,
+    level:"중급",
+    styles:["평지","강변"],
+    score:93,
+    description:"하천을 따라 길게 달리기 좋은 평지형 코스입니다.",
+    time:"아침 · 저녁",
+    facilities:"구간별 상이",
+    map:"공릉천",
+    image:"https://images.unsplash.com/photo-1552674605-db6ffd4facb5?auto=format&fit=crop&w=1000&q=85"
+  },
+
+
+  {
+    name:"임진각 평화누리",
+    region:"파주",
+    distance:null,
+    level:"초보",
+    styles:["평지","공원","풍경"],
+    score:94,
+    description:"넓은 잔디와 풍경을 즐기며 가볍게 움직이기 좋은 코스입니다.",
+    time:"낮 · 해질녘",
+    facilities:"화장실 · 편의시설",
+    map:"임진각 평화누리공원",
+    image:"https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?auto=format&fit=crop&w=1000&q=85"
+  },
+
+
+  {
+    name:"임진강변",
+    region:"파주",
+    distance:null,
+    level:"중급",
+    styles:["강변","풍경"],
+    score:90,
+    description:"강변 풍경을 즐기며 비교적 길게 달리고 싶은 러너에게 적합합니다.",
+    time:"낮 · 해질녘",
+    facilities:"구간별 상이",
+    map:"임진강",
+    image:"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1000&q=85"
+  },
+
+
+  {
+    name:"월롱산",
+    region:"파주",
+    distance:null,
+    level:"중급",
+    styles:["트레일","풍경"],
+    score:88,
+    description:"오르막과 산길을 포함하는 트레일 성격의 코스입니다.",
+    time:"낮",
+    facilities:"구간별 상이",
+    map:"월롱산",
+    image:"https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1000&q=85"
+  },
+
+
+  {
+    name:"감악산",
+    region:"파주",
+    distance:null,
+    level:"상급",
+    styles:["트레일","풍경"],
+    score:87,
+    description:"산악 지형과 오르막이 있어 운동 강도가 높은 트레일 코스입니다.",
+    time:"낮",
+    facilities:"구간별 상이",
+    map:"감악산",
+    image:"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1000&q=85"
   }
+
 ];
 
 
-function searchCourses() {
 
-  const region = document.getElementById("region").value;
-  const distance = document.getElementById("distance").value;
-  const level = document.getElementById("level").value;
-  const style = document.getElementById("style").value;
+function searchCourses(){
 
-  const result = courses.filter(function(course) {
+  const region =
+    document.getElementById("region").value;
 
-    const regionOK =
-      region === "all" || course.region === region;
+  const distance =
+    document.getElementById("distance").value;
 
-    const levelOK =
-      level === "all" || course.level === level;
+  const level =
+    document.getElementById("level").value;
 
-    const styleOK =
-      style === "all" ||
-      course.styles.includes(style);
+  const style =
+    document.getElementById("style").value;
 
-    const distanceOK =
-      distance === "all" ||
-      Math.abs(course.distance - Number(distance)) <= 1.5;
 
-    return regionOK &&
-           levelOK &&
-           styleOK &&
-           distanceOK;
+  const result =
+    courses.filter(function(course){
 
-  });
+      const regionOK =
+        region === "all" ||
+        course.region === region;
 
-  result.sort(function(a, b) {
-    return b.score - a.score;
-  });
+
+      const levelOK =
+        level === "all" ||
+        course.level === level;
+
+
+      const styleOK =
+        style === "all" ||
+        course.styles.includes(style);
+
+
+      const distanceOK =
+        distance === "all" ||
+        course.distance === null ||
+        Math.abs(
+          course.distance -
+          Number(distance)
+        ) <= 1.5;
+
+
+      return (
+        regionOK &&
+        levelOK &&
+        styleOK &&
+        distanceOK
+      );
+
+    })
+    .sort(function(a,b){
+
+      return b.score-a.score;
+
+    });
+
+
+
+  document
+    .getElementById("resultCount")
+    .innerText =
+      "조건에 맞는 러닝코스 " +
+      result.length +
+      "개";
+
 
 
   const grid =
     document.getElementById("courseGrid");
 
-  const count =
-    document.getElementById("resultCount");
 
-
-  count.innerText =
-    "조건에 맞는 러닝코스 " +
-    result.length +
-    "개";
-
-
-  if (result.length === 0) {
+  if(result.length === 0){
 
     grid.innerHTML = `
       <div class="no-result">
-        <h3>조건에 맞는 코스를 찾지 못했어요.</h3>
+
+        <h3>
+          조건에 맞는 코스를 찾지 못했어요.
+        </h3>
+
         <p style="margin-top:10px;">
           검색 조건을 조금 넓혀보세요.
         </p>
+
       </div>
     `;
 
     return;
+
   }
 
 
-  grid.innerHTML = result.map(function(course) {
 
-    return `
-      <div class="course-card">
+  grid.innerHTML =
+    result.map(function(course){
+
+      return `
 
         <div
-          class="course-image"
-          style="
-            background-image:
-            url('https://images.unsplash.com/photo-1552674605-db6ffd4facb5?auto=format&fit=crop&w=1000&q=85');
-          ">
+          class="course-card"
+          data-index="${courses.indexOf(course)}">
+
+          <div
+            class="course-image"
+            style="
+              background-image:url('${course.image}')
+            ">
+          </div>
+
+
+          <div class="course-info">
+
+            <h3>
+              ${course.name}
+            </h3>
+
+            <div class="course-meta">
+
+              ${course.region}
+              ·
+              ${
+                course.distance === null
+                ? "대표거리 확인중"
+                : course.distance + "km"
+              }
+              ·
+              ${course.level}
+
+            </div>
+
+
+            <div class="score">
+
+              추천도
+              ${course.score}점
+
+            </div>
+
+
+            <div class="tags">
+
+              ${
+                course.styles
+                  .map(function(tag){
+
+                    return `
+                      <span class="tag">
+                        ${tag}
+                      </span>
+                    `;
+
+                  })
+                  .join("")
+              }
+
+            </div>
+
+          </div>
+
         </div>
 
-        <div class="course-info">
+      `;
 
-          <h3>${course.name}</h3>
-
-          <div class="course-meta">
-            ${course.region}
-            · ${course.distance}km
-            · ${course.level}
-          </div>
-
-          <div class="score">
-            추천도 ${course.score}점
-          </div>
-
-          <div class="tags">
-
-            ${course.styles.map(function(tag) {
-              return `
-                <span class="tag">
-                  ${tag}
-                </span>
-              `;
-            }).join("")}
-
-          </div>
-
-        </div>
-
-      </div>
-    `;
-
-  }).join("");
+    })
+    .join("");
 
 }
 
 
+
+function openDetail(course){
+
+  document
+    .getElementById("detailName")
+    .innerText =
+      course.name;
+
+
+  document
+    .getElementById("detailScore")
+    .innerText =
+      "추천도 " +
+      course.score +
+      "점";
+
+
+  document
+    .getElementById("detailDescription")
+    .innerText =
+      course.description;
+
+
+  document
+    .getElementById("detailRegion")
+    .innerText =
+      course.region;
+
+
+  document
+    .getElementById("detailDistance")
+    .innerText =
+      course.distance === null
+      ? "대표거리 확인중"
+      : course.distance + "km";
+
+
+  document
+    .getElementById("detailLevel")
+    .innerText =
+      course.level;
+
+
+  document
+    .getElementById("detailTime")
+    .innerText =
+      course.time;
+
+
+  document
+    .getElementById("detailFacilities")
+    .innerText =
+      course.facilities;
+
+
+  document
+    .getElementById("detailStyles")
+    .innerText =
+      course.styles.join(" · ");
+
+
+  document
+    .getElementById("mapButton")
+    .href =
+      "https://map.naver.com/p/search/" +
+      encodeURIComponent(course.map);
+
+
+  document
+    .getElementById("detailModal")
+    .classList.add("open");
+
+
+  document
+    .getElementById("detailModal")
+    .setAttribute(
+      "aria-hidden",
+      "false"
+    );
+
+}
+
+
+
+function closeDetail(){
+
+  document
+    .getElementById("detailModal")
+    .classList.remove("open");
+
+
+  document
+    .getElementById("detailModal")
+    .setAttribute(
+      "aria-hidden",
+      "true"
+    );
+
+}
+
+
+
 document
   .getElementById("searchButton")
-  .onclick = searchCourses;
+  .onclick =
+    searchCourses;
+
 
 
 document
   .getElementById("goSearch")
-  .onclick = function() {
+  .onclick =
+    function(){
 
-    document
-      .getElementById("search")
-      .scrollIntoView({
-        behavior: "smooth"
-      });
+      document
+        .getElementById("search")
+        .scrollIntoView({
+          behavior:"smooth"
+        });
 
-  };
+    };
+
+
+
+document
+  .getElementById("nearbyTop")
+  .onclick =
+    function(){
+
+      if(!navigator.geolocation){
+
+        alert(
+          "이 브라우저에서는 위치 기능을 사용할 수 없습니다."
+        );
+
+        return;
+
+      }
+
+
+      navigator.geolocation.getCurrentPosition(
+
+        function(){
+
+          alert(
+            "현재 위치를 확인했습니다.\n\n" +
+            "다음 단계에서 가까운 러닝코스를 연결할게요."
+          );
+
+        },
+
+        function(){
+
+          alert(
+            "위치 권한을 허용해주세요."
+          );
+
+        }
+
+      );
+
+    };
+
+
+
+document
+  .getElementById("courseGrid")
+  .addEventListener(
+    "click",
+    function(event){
+
+      const card =
+        event.target.closest(
+          ".course-card"
+        );
+
+
+      if(!card){
+        return;
+      }
+
+
+      const course =
+        courses[
+          Number(card.dataset.index)
+        ];
+
+
+      if(course){
+        openDetail(course);
+      }
+
+    }
+  );
+
+
+
+document
+  .getElementById("closeDetail")
+  .onclick =
+    closeDetail;
+
+
+
+document
+  .getElementById("detailModal")
+  .addEventListener(
+    "click",
+    function(event){
+
+      if(
+        event.target.id ===
+        "detailModal"
+      ){
+
+        closeDetail();
+
+      }
+
+    }
+  );
+
+
+
+document
+  .addEventListener(
+    "keydown",
+    function(event){
+
+      if(
+        event.key ===
+        "Escape"
+      ){
+
+        closeDetail();
+
+      }
+
+    }
+  );
+
 
 
 searchCourses();
