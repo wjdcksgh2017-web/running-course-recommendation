@@ -531,271 +531,178 @@ id="courseGrid">
 
 <script>
 
-
+<script>
 const courses = [
-
-{
-name:"한강 반포 러닝코스",
-region:"서울",
-distance:5.2,
-level:"초보",
-styles:["평지","야경","강변"],
-score:96,
-image:"https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1000&q=85"
-},
-
-{
-name:"잠실 한강 러닝코스",
-region:"서울",
-distance:5,
-level:"초보",
-styles:["평지","강변","야경"],
-score:94,
-image:"https://images.unsplash.com/photo-1552674605-db6ffd4facb5?auto=format&fit=crop&w=1000&q=85"
-},
-
-{
-name:"여의도 한강공원",
-region:"서울",
-distance:5.8,
-level:"초보",
-styles:["평지","야경","공원"],
-score:93,
-image:"https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?auto=format&fit=crop&w=1000&q=85"
-},
-
-{
-name:"탄천 러닝코스",
-region:"경기",
-distance:10,
-level:"중급",
-styles:["평지","강변"],
-score:91,
-image:"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1000&q=85"
-},
-
-{
-name:"일산 호수공원",
-region:"경기",
-distance:5,
-level:"초보",
-styles:["공원","평지"],
-score:90,
-image:"https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1000&q=85"
-},
-
-{
-name:"인천 송도 센트럴파크",
-region:"인천",
-distance:3,
-level:"초보",
-styles:["공원","야경","평지"],
-score:92,
-image:"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1000&q=85"
-}
-
+  {
+    name: "한강 반포 러닝코스",
+    region: "서울",
+    distance: 5.2,
+    level: "초보",
+    styles: ["평지", "야경", "강변"],
+    score: 96,
+    image: "https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1000&q=85"
+  },
+  {
+    name: "잠실 한강 러닝코스",
+    region: "서울",
+    distance: 5,
+    level: "초보",
+    styles: ["평지", "강변", "야경"],
+    score: 94,
+    image: "https://images.unsplash.com/photo-1552674605-db6ffd4facb5?auto=format&fit=crop&w=1000&q=85"
+  },
+  {
+    name: "여의도 한강공원",
+    region: "서울",
+    distance: 5.8,
+    level: "초보",
+    styles: ["평지", "야경", "공원"],
+    score: 93,
+    image: "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?auto=format&fit=crop&w=1000&q=85"
+  },
+  {
+    name: "탄천 러닝코스",
+    region: "경기",
+    distance: 10,
+    level: "중급",
+    styles: ["평지", "강변"],
+    score: 91,
+    image: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1000&q=85"
+  },
+  {
+    name: "일산 호수공원",
+    region: "경기",
+    distance: 5,
+    level: "초보",
+    styles: ["공원", "평지"],
+    score: 90,
+    image: "https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1000&q=85"
+  },
+  {
+    name: "송도 센트럴파크",
+    region: "인천",
+    distance: 3,
+    level: "초보",
+    styles: ["공원", "야경", "평지"],
+    score: 92,
+    image: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1000&q=85"
+  }
 ];
 
-
-
-function scrollToSearch(){
-
-document
-.getElementById("search")
-.scrollIntoView({
-behavior:"smooth"
-});
-
+function scrollToSearch() {
+  document.getElementById("search").scrollIntoView({
+    behavior: "smooth"
+  });
 }
 
+function searchCourses() {
+  const region = document.getElementById("region").value;
+  const distance = document.getElementById("distance").value;
+  const level = document.getElementById("level").value;
+  const style = document.getElementById("style").value;
 
+  const filtered = courses.filter(function(course) {
 
-function searchCourses(){
+    const regionMatch =
+      region === "all" || course.region === region;
 
-const region=
-document.getElementById("region").value;
+    const levelMatch =
+      level === "all" || course.level === level;
 
-const distance=
-document.getElementById("distance").value;
+    const styleMatch =
+      style === "all" || course.styles.includes(style);
 
-const level=
-document.getElementById("level").value;
+    let distanceMatch = true;
 
-const style=
-document.getElementById("style").value;
+    if (distance !== "all") {
+      const target = Number(distance);
+      distanceMatch =
+        Math.abs(course.distance - target) <= 1.5;
+    }
 
+    return regionMatch && levelMatch && styleMatch && distanceMatch;
+  });
 
+  filtered.sort(function(a, b) {
+    return b.score - a.score;
+  });
 
-let filtered=courses.filter(course=>{
+  const grid = document.getElementById("courseGrid");
+  const count = document.querySelector(".result-count");
 
-const regionMatch=
-region==="all" ||
-course.region===region;
+  count.textContent =
+    "조건에 맞는 러닝코스 " + filtered.length + "개";
 
+  if (filtered.length === 0) {
+    grid.innerHTML = `
+      <div class="no-result">
+        <h3>조건에 맞는 코스를 찾지 못했어요.</h3>
+        <p style="margin-top:10px;">
+          검색 조건을 조금 넓혀보세요.
+        </p>
+      </div>
+    `;
+    return;
+  }
 
-const levelMatch=
-level==="all" ||
-course.level===level;
+  grid.innerHTML = filtered.map(function(course) {
+    return `
+      <div class="course-card">
 
+        <div
+          class="course-image"
+          style="background-image:url('${course.image}')">
+        </div>
 
-const styleMatch=
-style==="all" ||
-course.styles.includes(style);
+        <div class="course-info">
 
+          <h3>${course.name}</h3>
 
-let distanceMatch=true;
+          <div class="course-meta">
+            ${course.region} · ${course.distance}km · ${course.level}
+          </div>
 
-if(distance!=="all"){
+          <div class="score">
+            추천도 ${course.score}점
+          </div>
 
-const target=
-Number(distance);
+          <div class="tags">
+            ${course.styles.map(function(tag) {
+              return '<span class="tag">' + tag + '</span>';
+            }).join("")}
+          </div>
 
-distanceMatch=
-Math.abs(course.distance-target)<=1.5;
+        </div>
 
+      </div>
+    `;
+  }).join("");
 }
 
+function findNearby() {
+  if (!navigator.geolocation) {
+    alert("현재 브라우저에서는 위치 기능을 사용할 수 없습니다.");
+    return;
+  }
 
-return
-regionMatch &&
-levelMatch &&
-styleMatch &&
-distanceMatch;
-
-});
-
-
-filtered.sort((a,b)=>b.score-a.score);
-
-
-const grid=
-document.getElementById("courseGrid");
-
-const count=
-document.querySelector(".result-count");
-
-
-count.innerText=
-`조건에 맞는 러닝코스 ${filtered.length}개`;
-
-
-
-if(filtered.length===0){
-
-grid.innerHTML=`
-
-<div class="no-result">
-
-<h3>
-조건에 맞는 코스를 찾지 못했어요.
-</h3>
-
-<p style="margin-top:10px">
-
-검색 조건을 조금 넓혀보세요.
-
-</p>
-
-</div>
-
-`;
-
-return;
-
+  navigator.geolocation.getCurrentPosition(
+    function() {
+      alert(
+        "현재 위치를 확인했습니다.\n\n" +
+        "다음 단계에서 내 위치를 기준으로 " +
+        "가까운 러닝코스를 추천하도록 연결할게요."
+      );
+    },
+    function() {
+      alert(
+        "위치 권한이 필요합니다.\n" +
+        "브라우저에서 위치 권한을 허용해주세요."
+      );
+    }
+  );
 }
-
-
-
-grid.innerHTML=
-filtered.map(course=>`
-
-<div class="course-card">
-
-<div
-class="course-image"
-style="background-image:url('${course.image}')">
-</div>
-
-<div class="course-info">
-
-<h3>
-${course.name}
-</h3>
-
-<div class="course-meta">
-
-${course.region}
-· ${course.distance}km
-· ${course.level}
-
-</div>
-
-<div class="score">
-
-추천도 ${course.score}점
-
-</div>
-
-<div class="tags">
-
-${course.styles
-.map(style=>`<span class="tag">${style}</span>`)
-.join("")}
-
-</div>
-
-</div>
-
-</div>
-
-`).join("");
-
-}
-
-
-
-function findNearby(){
-
-if(!navigator.geolocation){
-
-alert(
-"현재 브라우저에서 위치 기능을 사용할 수 없습니다."
-);
-
-return;
-
-}
-
-
-navigator.geolocation.getCurrentPosition(
-
-function(){
-
-alert(
-"현재 위치를 확인했습니다.\n\n" +
-"다음 단계에서 내 위치를 기준으로 " +
-"가까운 러닝코스를 추천하도록 연결할게요."
-);
-
-},
-
-function(){
-
-alert(
-"위치 권한이 필요합니다.\n" +
-"브라우저에서 위치 권한을 허용해주세요."
-);
-
-}
-
-);
-
-}
-
-
 
 searchCourses();
-
 </script>
 
 
